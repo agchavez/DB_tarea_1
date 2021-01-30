@@ -34,12 +34,28 @@ SELECT
     Computer.price AS "Precio (L.)"
     FROM Computer
     WHERE
-        Computer.price <= 15000
+        Computer.price = 15000
 ;
 
 -- 
 -- Mostrar todas las marchas 
 SELECT * FROM Brand;
+
+-- Mostrar las memorias ram
+
+SELECT * FROM RAM;
+
+-- Mostrar las pantallas 
+
+SELECT * FROM Screen;
+
+-- Mostrar los discos de almacenamiento
+
+SELECT * FROM Storage;
+
+-- Mostrar todas las computadoras en el almacen
+
+SELECT * FROM Computer;
 
 
 

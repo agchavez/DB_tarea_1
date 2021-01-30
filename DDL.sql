@@ -1,13 +1,14 @@
 DROP TABLE Brand;
 -- Tabla de las marcas
-CREATE TABLE IF NOT EXISTS Brand(
+CREATE TABLE Brand(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nameM VARCHAR(30) NOT NULL,
-    locationM TEXT NOT NULL,
-    link_page TEXT NOT NULL,
-    email TEXT NOT NULL, 
+    locationM text NOT NULL,
+    link_page text NOT NULL,
+    email text NOT NULL, 
     tel_number INT NOT NULL
 );
+
 DROP TABLE Storage;
 -- Tabla de los discos de almacenamientos
 CREATE TABLE IF NOT EXISTS Storage(
