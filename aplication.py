@@ -30,7 +30,7 @@ class Menu:
             quit()
         else:
             print('Opcion no valida')
-            self.Menu
+            self.Menu()
 
     def insertsMenu(self):
         print('\n\n\n\n============================')
@@ -43,6 +43,7 @@ class Menu:
         print('Ingrese su opcion: ')
         seleccion = input()
         if  seleccion == '1':
+            
             data = {"id_brand":"",
                     "id_ram":"",
                     "id_storage":"",
@@ -91,7 +92,8 @@ class Menu:
             self.Menu()
         else:
             print('Opcion no valida')
-            self.menuShow
+            self.insertsMenu()
+        self.Menu()
 
     def enterokayData(self, data):
         for value in data:
@@ -105,8 +107,9 @@ class Menu:
         print('1. Mostrar todas las  Computadoras')
         print('2. Mostrar todas las RAM')
         print('3. Mostrar todas las pantallas')
-        print('4. Mostrar todas las marcas')
-        print('5. regresar al menu')
+        print('4. Mostrar todas los discos')
+        print('5. Mostrar todas las marcas')
+        print('6. regresar al menu')
         print('Ingrese su opcion: ')
         seleccion = input()
         if  seleccion == '1':
@@ -118,6 +121,8 @@ class Menu:
         elif seleccion == '4':
            query = self.db.getStorage()
         elif seleccion == '5':
+            query = self.db.getBrand()
+        elif seleccion == '6':
             self.Menu
         else:
             print('Opcion no valida')
@@ -182,7 +187,7 @@ class Menu:
         else:
             print('Opcion no valida')
             self.menuShow
-        self.Menu
+        self.Menu()
 
     def DeleteMenu(self):
         print('\n\n\n\n============================')
@@ -212,5 +217,5 @@ class Menu:
         else:
             print('Opcion no valida')
             self.menuShow   
-        self.Menu              
+        self.Menu()            
 

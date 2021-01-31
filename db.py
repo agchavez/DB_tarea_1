@@ -6,6 +6,8 @@ class Data:
         self.data = sqlite3.connect('mydatabase.db')
         self.cursor = self.data.cursor()
 
+    #---------------- Ingresar datos --------------------
+
     def setBrand(self, data):
         self.cursor.execute('''
                 INSERT INTO 
@@ -40,7 +42,7 @@ class Data:
                 int(data['launch_year']),
                 ))
         self.data.commit()
-        print('---- Computadira ingresada con exito ---')
+        print('---- Computadora ingresada con exito ---')
         return True
     
     def setScreen(self, data):
@@ -84,13 +86,14 @@ class Data:
         self.data.commit()
         print('---- RAMM ingresada con exito ---')
     
+    #---------------- Mostrar datos --------------------
+
     def getComputer(self):
         print('-----------COMPUTADORAS---------------')
         query = self.cursor.execute('SELECT * FROM Computer')
         self.showRow(query)
         return True
         
-
     def getBrand(self):
         print('-----------MARCAS---------------')
         query = self.cursor.execute('SELECT * FROM Brand')
@@ -118,7 +121,8 @@ class Data:
     def showRow(self, query):   
         for row in query:
             print(row)
-        
+
+    #---------------- Actualizar datos --------------------   
 
     def updateComputer(self, data):
         print('-----------ACTUALIZAR COMPUTADORA---------------')
@@ -174,7 +178,7 @@ class Data:
         self.data.commit()
         print('-----------Pantalla Actualizada con exito-----------') 
         return True
-        
+     
     def updateBrand(self, data):
         print('---------------ACTUALIZAR MARCA------------------')
         self.cursor.execute('''
@@ -193,6 +197,8 @@ class Data:
         self.data.commit()
         print('-----------Marca Actualizada con exito-----------') 
         return True                    
+
+    #---------------- Eliminar datos --------------------
 
     def deleteComputer(self, id): 
         print('---------------ELIMINAR COMPUTADORA------------------')
