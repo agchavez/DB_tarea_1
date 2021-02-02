@@ -3,22 +3,89 @@ import sys
 class Data:
 
     def __init__(self):
-        self.data = sqlite3.connect('mydatabase.db')
+        self.data = sqlite3.connect('data.db')
         self.cursor = self.data.cursor()
+        self.createData()
 
-    #---------------- Ingresar datos --------------------
+    
+    def createData(self):
+        try: 
+            self.cursor.execute('''
+                    -- Tabla de las marcas
+                    CREATE TABLE Brand(
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        nameM VARCHAR(30) NOT NULL,
+                        locationM text NOT NULL,
+                        link_page text NOT NULL,
+                        email text NOT NULL, 
+                        tel_number text NOT NULL
+                    );
+                    CREATE TABLE IF NOT EXISTS Storage(
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        id_brand INT NOT NULL,
+                        model_name TEXT NOT NULL, 
+                        type_tech VARCHAR(3) NOT NULL DEFAULT 'HDD', 
+                        capacity SMALLINT NOT NULL,
+                        reading SMALLINT NOT NULL, 
+                        writing SMALLINT NOT NULL,
+                        FOREIGN KEY (id_brand) REFERENCES Brand(id) ON UPDATE CASCADE
+                    );
+                    
+                    CREATE TABLE IF NOT EXISTS RAM(
+                        id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                        id_brand INT NOT NULL, 
+                        model_name TEXT NOT NULL,
+                        frequency SMALLINT NOT NULL, 
+                        capacity SMALLINT NOT NULL, 
+                        type_tech VARCHAR(4) NOT NULL, 
+                        FOREIGN KEY (id_brand) REFERENCES Brand(id) ON UPDATE CASCADE
+                    );
+                    
+                    CREATE TABLE IF NOT EXISTS Screen(
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        id_brand INT NOT NULL,
+                        model_name TEXT NOT NULL,
+                        resolution VARCHAR(6) NOT NULL,
+                        type_tech VARCHAR(10) NOT NULL, 
+                        dimension TINYINT NOT NULL,
+                        FOREIGN KEY (id_brand) REFERENCES Brand(id) ON UPDATE CASCADE
+                    );
 
+                    CREATE TABLE IF NOT EXISTS Computer(
+                        id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                        id_brand INT NOT NULL, 
+                        id_ram INT NOT NULL, 
+                        id_storage INT NOT NULL, 
+                        id_screen INT NOT NULL, 
+                        model_name TEXT NOT NULL,
+                        price INT NOT NULL, 
+                        link_manual TEXT NOT NULL,
+                        quantity SMALLINT NOT NULL, 
+                        keyboard_lang VARCHAR(6) NOT NULL,
+                        launch_year YEAR NOT NULL,
+                        FOREIGN KEY (id_ram) REFERENCES RAM(id) ON UPDATE CASCADE,
+                        FOREIGN KEY (id_storage) REFERENCES Storage(id) ON UPDATE CASCADE,
+                        FOREIGN KEY (id_screen) REFERENCES Screen(id) ON UPDATE CASCADE,
+                        FOREIGN KEY (id_brand) REFERENCES Brand(id) ON UPDATE CASCADE
+                    );
+                    ''')
+        except sqlite3.OperationalError:
+            print('Base de datos ya existente')
+        self.data.commit()
+
+ #---------------- Ingresar datos --------------------
+ #        
     def setBrand(self, data):
         self.cursor.execute('''
                 INSERT INTO 
                     Brand(nameM,locationM,link_page,email,tel_number) VALUES
-                ('%s','%s','%s','%s',%d)
+                ('%s','%s','%s','%s',%s)
         ''' % (data['nameM'],
                 data['locationM'],
                 data['link_page'],
                 data['email'],
-                int(data['tel_number']),
-                ))
+                data['tel_number']),
+                )
         self.data.commit()
         print('---- Marca ingresada con exito ---')
         return True

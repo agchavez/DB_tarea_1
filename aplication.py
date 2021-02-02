@@ -86,7 +86,7 @@ class Menu:
                     "email":"",
                     "tel_number":""
                     }
-            self.db.setStorage(self.enterokayData(data))
+            self.db.setBrand(self.enterokayData(data))
             self.Menu
         elif seleccion == '5':
             self.Menu()
